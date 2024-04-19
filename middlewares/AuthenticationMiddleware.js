@@ -1,0 +1,102 @@
+const jwt = require("jsonwebtoken");
+const responseMessages = require("../ResponseMessages");
+
+// ################################ Repositories ################################ //
+const UserRepo = require("../repositories/UserRepo");
+const AdminRepo = require("../repositories/AdminRepo");
+
+// ################################ Globals ################################ //
+const jwtOptionsAccess = global.constants.jwtAccessTokenOptions;
+
+//User Authentication
+module.exports.authenticateRequestAPI = async (req, res, next) => {
+    try {
+        if (req.headers.authorization) {
+            let accessToken = req.headers.authorization.split(' ')[1];
+            jwt.verify(accessToken, jwtOptionsAccess.secret, async (err, decodedToken) => {
+                if (err) {
+                    return res.json({
+                        status: 401,
+                        msg: responseMessages.authFailure,
+                    }) 
+                }
+                else {
+                    // let userCount = await userRepositories.count({ where: { id: decodedToken.user_id } });
+                    let userCount = await UserRepo.findOne({id: decodedToken.user_id});
+                    
+                    if(userCount) {
+                        req.headers.userID = decodedToken.user_id;
+                        next();
+                    }
+                    else{
+                        return res.json({
+                            status: 401,
+                            msg: responseMessages.authFailure,
+                        })
+                    }
+                }
+            });
+        }
+        else {
+            return res.json({
+                status: 401,
+                msg: responseMessages.authRequired
+            })
+        }
+    }
+    catch (e) {
+        console.log("Middleware Error : ", e);
+        res.json({
+            status: 500,
+            message: responseMessages.serverError,
+        })
+    }
+}
+
+//Admin Authentication
+module.exports.authenticateRequestAdminAPI = async (req, res, next) => {
+    try {
+        if (req.headers.authorization) {
+            let accessToken = req.headers.authorization.split(' ')[1];
+            jwt.verify(accessToken, jwtOptionsAccess.secret, async (err, decodedToken) => {
+                if (err) {
+                    return res.json({
+                        status: 401,
+                        msg: responseMessages.authFailure,
+                    })
+                }
+                else {
+                    let adminCount = await AdminRepo.findOne({id: decodedToken.user_id});
+                    
+                    if(adminCount) {
+                        req.headers.userID = decodedToken.user_id;
+                        next();
+                    }
+                    else{
+                        return res.json({
+                            status: 401,
+                            msg: responseMessages.authFailure,
+                        })
+                    }
+                }
+            });
+        }
+        else {
+            return res.json({
+                status: 401,
+                msg: responseMessages.authRequired
+            })
+        }
+    }
+    catch (e) {
+        console.log("Middleware Error : ", e);
+        res.json({
+            status: 500,
+            message: responseMessages.serverError,
+        })
+    }
+}
+
+
+
+
