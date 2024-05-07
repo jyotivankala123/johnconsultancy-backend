@@ -6,20 +6,21 @@ const router = express.Router();
 
 
 // SET STORAGE Images
-var storageProfileImages = multer.diskStorage({
-    destination: function(req, file, cb) {
-        const path = 'uploads/profileImages';
+var storageReportImages = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const path = 'uploads/images';
         fs.mkdirSync(path, { recursive: true });
         cb(null, path);
     },
-    filename: function(req, file, cb) {
-        cb(null, 'profile-image-' + Date.now() + path.extname(file.originalname))
+    filename: function (req, file, cb) {
+        cb(null, 'file-' + Date.now() + path.extname(file.originalname))
     }
 })
 
 
-var uploadProfileImage = multer({ storage: storageProfileImages });
 
+
+var uploadReportImage = multer({ storage: storageReportImages });
 
 /* ############################################ Middlewares ############################################ */
 const validateRequest = require("../middlewares/ValidateRequest");
@@ -37,8 +38,10 @@ const AuthenticationController = require('../controllers/User/AuthenticationCont
 // ############################################# AUTH ################################################### //
 router.post('/register', validateRequest.validate(userValidationSchema.userRegisterSchema, 'body'), AuthenticationController.userRegister); // User Registration Route
 router.post('/login', validateRequest.validate(userValidationSchema.userLoginSchema, 'body'), AuthenticationController.userLogin); // User Login
-// router.post('/forgot-password', validateRequest.validate(userValidationSchema.forgotPassSchema, 'body'), AuthenticationController.forgotPassword); // Forgot Password Route
-// router.post('/reset-password', validateRequest.validate(userValidationSchema.resetPassSchema, 'body'), AuthenticationController.resetPassword); // Reset Password Route
-// router.delete('/delete-account',  authenticationMiddleware.authenticateRequestAPI, AuthenticationController.deleteAccount); // Delete User Route
+router.get('/fetch-categories',  AuthenticationController.fetchCategories); // Fetch Categories
+router.post('/upload-cv',uploadReportImage.single('file'),  AuthenticationController.uploadUserCV); // Upload CV
+
+
+
 
 module.exports = router;

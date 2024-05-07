@@ -5,19 +5,12 @@ const Joi = JoiBase.extend(JoiDate); // extend Joi with Joi Date
 // Create User Schema
 module.exports.userRegisterSchema = Joi.object().keys({
     full_name: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string()
-        .min(6)
-        // .regex(/(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/)
-        .required(),
-    // .messages({
-    //     'string.pattern.base': `"Password" should be Alphanumeric `,
-    // }),
-    confirm_password: Joi.string().valid(Joi.ref('password')).required()
-        .messages({
-            'any.only': `"Confirm Password" should match with "Password"`
-        }),
-}).with('password', 'confirm_password');
+    phone: Joi.string().required(),
+    cv: Joi.string().required(),
+    category_id: Joi.string().required(),
+
+   
+});
 
 // Login Schema
 module.exports.userLoginSchema = Joi.object().keys({

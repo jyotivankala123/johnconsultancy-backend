@@ -15,13 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   users.init({
     full_name: DataTypes.STRING,
-    email: DataTypes.STRING,
+    category_id: DataTypes.STRING,
     phone: DataTypes.STRING,
-    profile_image: DataTypes.STRING,
-    otp: DataTypes.STRING,
-    password: DataTypes.STRING,
-    is_active: DataTypes.ENUM('0', '1'),
-
+    user_cv: DataTypes.STRING,
+  
   }, {
     sequelize,
     modelName: 'users',

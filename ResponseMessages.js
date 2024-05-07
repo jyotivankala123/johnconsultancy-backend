@@ -2,7 +2,7 @@ module.exports = {
     serverError: 'Something went wrong!!!',
 
     duplicateEmail: "Esta dirección de correo electrónico ya está registrada.",
-    registrationSuccess: "Te has registrado exitosamente",
+    registrationSuccess: "Applied Successfully",
     invalidCreds: "Credenciales no válidas, intente nuevamente",
 
     AdminInactivatedCreds: "Su cuenta ha sido deshabilitada por la administradora",

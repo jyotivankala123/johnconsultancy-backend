@@ -10,6 +10,7 @@ module.exports = {
     image_url: process.env.HOST_URL + 'uploads/images',
     profile_photo_url: process.env.HOST_URL + '/uploads/profileImages',
     item_photo_url: process.env.HOST_URL + '/uploads/itemImages',
+    pdf_download_link: process.env.HOST_URL + 'uploads/images',
     identity_image:  '/uploads/identity',
     jwtAccessTokenOptions: {
         secret: 'RSS#@2023',
