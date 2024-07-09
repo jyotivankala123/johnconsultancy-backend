@@ -196,7 +196,7 @@ module.exports.fetchCategories = (req, res) => {
             return res.send({
                 status: 500,
                 msg: "Something went wrong",
-                data: {},
+                data: err+"***",
                 purpose: purpose
             })
         }
