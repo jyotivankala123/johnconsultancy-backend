@@ -195,7 +195,7 @@ module.exports.fetchCategories = (req, res) => {
             console.log("Fetch CMS Error : ", err);
             return res.send({
                 status: 500,
-                msg: "Something went wrong",
+                msg: "Something went wrongh",
                 data: err+"***",
                 purpose: purpose
             })
